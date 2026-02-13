@@ -34,17 +34,18 @@ export default App;
 
 ---
 
-### Prompt 2
+## Prompt 2
 
-- how do i check pinecone health, should I try making a simple insert and then determine ?
-
----
-
-### Prompt 3
+```
+how do i check pinecone health, should I try making a simple insert and then determine ?
+```
 
 ---
 
-- this is the idea I have come up with for health status page, is it looking good
+## Prompt 3
+
+```
+this is the idea I have come up with for health status page, is it looking good
 
 from fastapi import APIRouter
 from groq import Groq
@@ -71,18 +72,22 @@ def health():
     llm_response=completion.choices[0].message.content
     if(len(llm_response) > 4):
         healths["llm"] = "up"
-  
----
-
-### Prompt 4
-
-- Please help me make a navigation bar for my project that has only 2 routes that is health and chat following the same theme as the app.tsx
+```
 
 ---
 
-### Prompt 5
+## Prompt 4
 
-- Please help me make a health page that has the same theme as the app.tsx
+```
+Please help me make a navigation bar for my project that has only 2 routes that is health and chat following the same theme as the app.tsx
+```
+
+---
+
+## Prompt 5
+
+```
+Please help me make a health page that has the same theme as the app.tsx
 
 "use client";
 
@@ -133,9 +138,13 @@ export default function HealthPage() {
         </div>
     );
 }
+```
 
-### Prompt 6
+---
 
+## Prompt 6
+
+```
 Right now my docker image for server takes too long to start, can you please help me optimize it?
 
 this is the current dockerfile
@@ -154,17 +163,22 @@ COPY . .
 EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
+```
 
 ---
 
-### Prompt 7
+## Prompt 7
 
-- assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
+```
+assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
+```
 
-### Prompt 8
+---
 
-- Please help me add the logic to persist the uploaded files and chat history using localStorage
+## Prompt 8
+
+```
+Please help me add the logic to persist the uploaded files and chat history using localStorage
 
 "use client";
 
@@ -299,3 +313,6 @@ export default function ChatPage() {
     </div>
   );
 }
+```
+
+---
