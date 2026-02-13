@@ -162,3 +162,140 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 - assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
 
+### Prompt 8
+
+- Please help me add the logic to persist the uploaded files and chat history using localStorage
+
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Ask from "../components/Ask";
+import Sources from "../components/Sources";
+
+export default function ChatPage() {
+  const [result, setResult] = useState<any>(null);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleFileUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) {
+      alert("Please select at least one file");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { uploadFiles } = await import("../lib/api");
+      await uploadFiles(Array.from(files));
+      setUploadedFiles((prev) => [...prev, ...Array.from(files)]);
+      alert("Upload successful");
+    } catch {
+      alert("Upload failed");
+    }
+    setLoading(false);
+  };
+
+  const handleRemoveFile = (index: number) => {
+    setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="flex h-screen from-white to-gray-100">
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`
+          fixed lg:static inset-y-0 left-0 z-50
+          w-80 bg-white border-r-2 border-black flex flex-col
+          transform transition-transform duration-300 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}
+      >
+        <div className="p-4 sm:p-6 border-b-2 border-black flex items-center justify-between">
+          <Link
+            href="/"
+            className="inline-flex items-center px-3 sm:px-4 py-2 border-2 border-black text-black font-semibold rounded-lg"
+          >
+            ← Home
+          </Link>
+
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-black text-2xl"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="p-4 sm:p-6 border-b-2 border-black">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 text-black">
+            Upload Documents
+          </h2>
+
+          <input
+            type="file"
+            multiple
+            onChange={(e) => handleFileUpload(e.target.files)}
+            disabled={loading}
+          />
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 text-black">
+            Uploaded Files
+          </h3>
+
+          {uploadedFiles.length === 0 ? (
+            <p>No files uploaded yet</p>
+          ) : (
+            <div>
+              {uploadedFiles.map((file, index) => (
+                <div key={index}>
+                  <span>{file.name}</span>
+                  <button onClick={() => handleRemoveFile(index)}>Remove</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="p-4 sm:p-6 border-t-2 border-black">
+          <button onClick={clearHistory}>Clear History</button>
+        </div>
+      </aside>
+
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
+        <div className="p-4 sm:p-6 border-b-2 border-black bg-white flex items-center gap-4">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden"
+          >
+            ☰
+          </button>
+          <h1 className="text-2xl sm:text-3xl font-bold">Chat</h1>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <Ask setResult={setResult} hasFiles={uploadedFiles.length > 0} />
+
+            {result && (
+              <div>
+                <h2>Answer</h2>
+                <p>{result.answer}</p>
+                <Sources sources={result.sources} />
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
