@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+
+python-dotenv
+
+python-multipart
+
+pydantic
+
+pinecone
+pinecone-client
+
+sentence-transformers
+
+groq
+
+numpy
