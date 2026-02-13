@@ -79,3 +79,86 @@ def health():
 - Please help me make a navigation bar for my project that has only 2 routes that is health and chat following the same theme as the app.tsx
 
 ---
+
+### Prompt 5
+
+- Please help me make a health page that has the same theme as the app.tsx
+
+"use client";
+
+import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+
+interface HealthStatus {
+    backend: "up" | "down";
+    llm: "up" | "down";
+    database: "up" | "down";
+}
+
+export default function HealthPage() {
+    const [healthData, setHealthData] = useState<HealthStatus | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch("http://localhost:8000/health")
+            .then((res) => res.json())
+            .then((data) => {
+                setHealthData(data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, []);
+
+    return (
+        <div>
+            <Navbar />
+
+            <h1>Health Status</h1>
+
+            {loading && <p>Loading...</p>}
+
+            {!loading && !healthData && (
+                <p>Failed to load health status</p>
+            )}
+
+            {!loading && healthData && (
+                <div>
+                    <p>Backend: {healthData.backend}</p>
+                    <p>LLM: {healthData.llm}</p>
+                    <p>Database: {healthData.database}</p>
+                </div>
+            )}
+        </div>
+    );
+}
+
+### Prompt 6
+
+Right now my docker image for server takes too long to start, can you please help me optimize it?
+
+this is the current dockerfile
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+---
+
+### Prompt 7
+
+- assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
+
