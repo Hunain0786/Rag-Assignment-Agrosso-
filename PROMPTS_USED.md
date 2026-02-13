@@ -4,10 +4,10 @@
 
 ## Prompt 1
 
-```
-this is my app.tsx
+**Prompt:** please help me style it using tailwindcss, I want simple black and white theme
 
-please help me style it using tailwindcss, I want simple black and white theme
+```tsx
+// this is my app.tsx
 
 import { useState } from "react";
 import Upload from "./components/Upload";
@@ -36,17 +36,15 @@ export default App;
 
 ## Prompt 2
 
-```
-how do i check pinecone health, should I try making a simple insert and then determine ?
-```
+**Prompt:** how do i check pinecone health, should I try making a simple insert and then determine ?
 
 ---
 
 ## Prompt 3
 
-```
-this is the idea I have come up with for health status page, is it looking good
+**Prompt:** this is the idea I have come up with for health status page, is it looking good
 
+```python
 from fastapi import APIRouter
 from groq import Groq
 from config import GROQ_API_KEY
@@ -78,17 +76,15 @@ def health():
 
 ## Prompt 4
 
-```
-Please help me make a navigation bar for my project that has only 2 routes that is health and chat following the same theme as the app.tsx
-```
+**Prompt:** Please help me make a navigation bar for my project that has only 2 routes that is health and chat following the same theme as the app.tsx
 
 ---
 
 ## Prompt 5
 
-```
-Please help me make a health page that has the same theme as the app.tsx
+**Prompt:** Please help me make a health page that has the same theme as the app.tsx
 
+```tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -144,10 +140,10 @@ export default function HealthPage() {
 
 ## Prompt 6
 
-```
-Right now my docker image for server takes too long to start, can you please help me optimize it?
+**Prompt:** Right now my docker image for server takes too long to start, can you please help me optimize it?
 
-this is the current dockerfile
+```dockerfile
+# this is the current dockerfile
 
 FROM python:3.11-slim
 
@@ -169,17 +165,15 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ## Prompt 7
 
-```
-assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
-```
+**Prompt:** assume I have services server in docker-compose file, so when we run the docker-compose file what would be the server url for frontend ??
 
 ---
 
 ## Prompt 8
 
-```
-Please help me add the logic to persist the uploaded files and chat history using localStorage
+**Prompt:** Please help me add the logic to persist the uploaded files and chat history using localStorage
 
+```tsx
 "use client";
 
 import { useState } from "react";
@@ -314,5 +308,11 @@ export default function ChatPage() {
   );
 }
 ```
+
+---
+
+## Prompt 9
+
+**Prompt:** right now the code in prompt_used.md is not formatted properly it's displaying half in bash and half as text, can you please help me format it ?
 
 ---
